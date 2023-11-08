@@ -14,17 +14,17 @@ model User {
   password     String
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
-  costCenter   CostCenter    @relation(fields: [costCenterId], references: [id])
-  costCenterId String
+  costCenterId String?
   Transaction  Transaction[]
+  costCenter   CostCenter?   @relation(fields: [costCenterId], references: [id])
 }
 
 model CostCenter {
   id          String        @id @default(uuid())
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
-  User        User[]
   Transaction Transaction[]
+  User        User[]
 }
 
 model Transaction {
@@ -37,8 +37,8 @@ model Transaction {
   category      String
   subcategory   String
   paymentMethod String
-  author        User       @relation(fields: [authorId], references: [id])
   authorId      String
-  costCenter    CostCenter @relation(fields: [costCenterId], references: [id])
   costCenterId  String
+  author        User       @relation(fields: [authorId], references: [id])
+  costCenter    CostCenter @relation(fields: [costCenterId], references: [id])
 }
