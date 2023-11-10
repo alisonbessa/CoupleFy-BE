@@ -29,7 +29,7 @@ export class CostCentersController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.costCentersService.findOne(+id);
+    return this.costCentersService.findOne(id);
   }
 
   @Patch(':id')
@@ -37,11 +37,11 @@ export class CostCentersController {
     @Param('id') id: string,
     @Body() updateCostCenterDto: UpdateCostCenterDto,
   ) {
-    return this.costCentersService.update(+id, updateCostCenterDto);
+    return this.costCentersService.update(id, updateCostCenterDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.costCentersService.remove(+id);
+    return this.costCentersService.remove(id);
   }
 }
