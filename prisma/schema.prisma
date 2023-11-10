@@ -15,16 +15,16 @@ model User {
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   costCenterId String?
-  Transaction  Transaction[]
+  transactions Transaction[]
   costCenter   CostCenter?   @relation(fields: [costCenterId], references: [id])
 }
 
 model CostCenter {
-  id          String        @id @default(uuid())
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  Transaction Transaction[]
-  User        User[]
+  id           String        @id @default(uuid())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  transactions Transaction[]
+  User         User[]
 }
 
 // TODO: Add a date field, so we can filter transactions by date
@@ -40,6 +40,7 @@ model Transaction {
   paymentMethod String
   authorId      String
   costCenterId  String
+  date          DateTime   @default(now())
   author        User       @relation(fields: [authorId], references: [id])
   costCenter    CostCenter @relation(fields: [costCenterId], references: [id])
 }

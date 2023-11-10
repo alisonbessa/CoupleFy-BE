@@ -1,4 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { CostCenter } from 'src/cost-centers/entities/cost-center.entity';
+import { User } from 'src/users/entities/user.entity';
 
 export class Transaction {
   @ApiProperty()
@@ -33,4 +35,10 @@ export class Transaction {
 
   @ApiProperty()
   updatedAt: Date;
+
+  @ApiProperty({ type: () => [User] })
+  users?: User;
+
+  @ApiProperty({ type: () => [CostCenter] })
+  costCenter?: CostCenter;
 }
