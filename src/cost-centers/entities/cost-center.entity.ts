@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transaction } from 'src/transactions/entities/transaction.entity';
-import { User } from 'src/users/entities/user.entity';
+import { TransactionEntity } from 'src/transactions/entities/transaction.entity';
+import { UserEntity } from 'src/users/entities/user.entity';
 
-export class CostCenter {
+export class CostCenterEntity {
   @ApiProperty()
   id: string;
 
@@ -12,9 +12,9 @@ export class CostCenter {
   @ApiProperty()
   updatedAt: Date;
 
-  @ApiProperty({ type: () => [Transaction] })
-  transactions?: Transaction[];
+  @ApiProperty({ type: () => [TransactionEntity] })
+  transactions?: TransactionEntity[];
 
-  @ApiProperty({ type: () => [User] })
-  users?: User[];
+  @ApiProperty({ type: () => [UserEntity] })
+  users?: UserEntity[];
 }
