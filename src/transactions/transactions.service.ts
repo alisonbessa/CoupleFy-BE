@@ -23,6 +23,14 @@ export class TransactionsService {
     });
   }
 
+  // TODO: Create a service to get transactions from a specific month
+
+  // TODO: Create a service to get transactions by category
+
+  // TODO: Create a service to get transactions by category for a specific month
+
+  // TODO: Create a service to create many transactions at a time
+
   update(transactionId: string, updateTransactionDto: UpdateTransactionDto) {
     return this.prisma.transaction.update({
       where: { id: transactionId },

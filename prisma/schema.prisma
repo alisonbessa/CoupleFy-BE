@@ -27,6 +27,7 @@ model CostCenter {
   User        User[]
 }
 
+// TODO: Add a date field, so we can filter transactions by date
 model Transaction {
   id            String     @id @default(uuid())
   title         String
