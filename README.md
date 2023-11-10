@@ -1,73 +1,31 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# CoupleFy Finance
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+CoupleFy Finance is a web application built to simplify financial management for couples. This platform allows users to keep track of personal and shared expenses, providing insights into their financial activities and promoting transparent collaboration.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- **Individual and Shared Transactions:** Users can log both personal and shared expenses, facilitating effective financial collaboration between partners.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Monthly Transaction Summaries:** View a summarized overview of monthly transactions, making it easy to understand and manage finances on a month-to-month basis.
 
-## Installation
+- **Categorized Expenses with Subcategories:** Organize expenses into categories and subcategories for a detailed breakdown of spending patterns.
 
-```bash
-$ yarn install
-```
+- **User-Friendly Toggle Functionality:** Toggle between different categories to explore detailed expenses, providing a user-friendly experience.
 
-## Running the app
+- **Secure Single Sign-On (SSO) Login:** Implement a secure authentication system using Auth0 for a seamless and safe login experience.
 
-```bash
-# development
-$ yarn run start
+- **Integration with Popular Payment Methods:** CoupleFy Finance integrates with popular payment methods, ensuring that users can accurately track various financial sources.
 
-# watch mode
-$ yarn run start:dev
+- **Scalable Architecture:** The application is built on a scalable architecture, allowing for easy integration of additional features in the future.
 
-# production mode
-$ yarn run start:prod
-```
+## Technologies Used
 
-## Test
+- Frontend: React, Next.js, Material UI
+- Backend: Node.js, NestJS, Prisma
+- Database: PostgreSQL
+- Testing: Jest
+- Continuous Integration/Continuous Deployment (CI/CD)
+- TypeScript
 
-```bash
-# unit tests
-$ yarn run test
 
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+Happy budgeting with CoupleFy Finance!
