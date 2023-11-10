@@ -2,6 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class Transaction {
   @ApiProperty()
+  id: string;
+
+  @ApiProperty()
   title: string;
 
   @ApiProperty({ required: false, nullable: true })
@@ -24,4 +27,10 @@ export class Transaction {
 
   @ApiProperty()
   costCenterId: string;
+
+  @ApiProperty()
+  createdAt: Date;
+
+  @ApiProperty()
+  updatedAt: Date;
 }
