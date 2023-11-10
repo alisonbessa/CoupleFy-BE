@@ -18,8 +18,8 @@ export class TransactionEntity {
   @ApiProperty()
   category: string;
 
-  @ApiProperty()
-  subcategory: string;
+  @ApiProperty({ required: false, nullable: true })
+  subcategory: string | null;
 
   @ApiProperty()
   paymentMethod: string;

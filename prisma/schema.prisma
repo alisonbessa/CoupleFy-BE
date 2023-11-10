@@ -36,7 +36,7 @@ model Transaction {
   updatedAt     DateTime   @updatedAt
   amount        Float
   category      String
-  subcategory   String
+  subcategory   String?
   paymentMethod String
   authorId      String
   costCenterId  String
