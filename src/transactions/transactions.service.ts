@@ -11,6 +11,12 @@ export class TransactionsService {
     return this.prisma.transaction.create({ data: createTransactionDto });
   }
 
+  createMany(transactions: CreateTransactionDto[]) {
+    return this.prisma.transaction.createMany({
+      data: transactions,
+    });
+  }
+
   findAll(costCenterId: string) {
     return this.prisma.transaction.findMany({
       where: { costCenterId },
@@ -24,12 +30,12 @@ export class TransactionsService {
   }
 
   // TODO: Create a service to get transactions from a specific month
+  // The schema should be updated before, to add a date field or year and month fields
 
   // TODO: Create a service to get transactions by category
 
   // TODO: Create a service to get transactions by category for a specific month
-
-  // TODO: Create a service to create many transactions at a time
+  // The schema should be updated before, to add a date field or year and month fields
 
   update(transactionId: string, updateTransactionDto: UpdateTransactionDto) {
     return this.prisma.transaction.update({
