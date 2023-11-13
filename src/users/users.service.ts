@@ -17,7 +17,6 @@ export class UsersService {
 
       costCenterIdToUse = costCenter.id;
     } else {
-      // If costCenterId is provided, check if it exists
       const existingCostCenter = await this.prisma.costCenter.findUnique({
         where: { id: costCenterId },
       });
@@ -35,12 +34,19 @@ export class UsersService {
   }
 
   findAll() {
-    return this.prisma.user.findMany();
+    return this.prisma.user.findMany({
+      include: {
+        costCenter: true,
+      },
+    });
   }
 
   findOne(id: string) {
     return this.prisma.user.findUnique({
       where: { id },
+      include: {
+        costCenter: true,
+      },
     });
   }
 
