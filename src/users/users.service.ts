@@ -4,24 +4,28 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 
+const hashingRounds = parseInt(process.env.HASHING_ROUNDS, 10) || 10;
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
+
   async create(createUserDto: CreateUserDto) {
     const existingUser = await this.prisma.user.findUnique({
       where: { email: createUserDto.email },
     });
-  
+
     if (existingUser) {
       throw new ConflictException('Email already in use.');
     }
-    
+
     const { costCenterId } = createUserDto;
     let costCenterIdToUse: string;
 
+    console.log('process', process.env.HASHING_ROUNDS);
+
     const hashedPassword = await bcrypt.hash(
       createUserDto.password,
-      process.env.HASHING_ROUNDS,
+      hashingRounds,
     );
 
     createUserDto.password = hashedPassword;
@@ -70,7 +74,7 @@ export class UsersService {
     if (updateUserDto.password) {
       updateUserDto.password = await bcrypt.hash(
         updateUserDto.password,
-        process.env.HASHING_ROUNDS,
+        hashingRounds,
       );
     }
 
