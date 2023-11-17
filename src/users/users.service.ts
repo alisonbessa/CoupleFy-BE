@@ -8,6 +8,14 @@ import * as bcrypt from 'bcrypt';
 export class UsersService {
   constructor(private prisma: PrismaService) {}
   async create(createUserDto: CreateUserDto) {
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email: createUserDto.email },
+    });
+  
+    if (existingUser) {
+      throw new ConflictException('Email already in use.');
+    }
+    
     const { costCenterId } = createUserDto;
     let costCenterIdToUse: string;
 
