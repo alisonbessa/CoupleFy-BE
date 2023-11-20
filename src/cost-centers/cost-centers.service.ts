@@ -12,10 +12,6 @@ export class CostCentersService {
     });
   }
 
-  findAll() {
-    return this.prisma.costCenter.findMany();
-  }
-
   findOne(id: string) {
     return this.prisma.costCenter.findUnique({ where: { id } });
   }

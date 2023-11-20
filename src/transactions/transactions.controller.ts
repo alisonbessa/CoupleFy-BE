@@ -16,6 +16,7 @@ import { ApiTags, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { TransactionEntity } from './entities/transaction.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { User } from 'src/users/user.decorator';
+import { UserEntity } from 'src/users/entities/user.entity';
 
 @Controller('transactions')
 @ApiTags('Transactions')
@@ -25,7 +26,10 @@ export class TransactionsController {
   @Post()
   @UseGuards(JwtAuthGuard)
   @ApiCreatedResponse({ type: TransactionEntity })
-  create(@Body() createTransactionDto: CreateTransactionDto, @User() user) {
+  create(
+    @Body() createTransactionDto: CreateTransactionDto,
+    @User() user: UserEntity,
+  ) {
     return this.transactionsService.create({
       ...createTransactionDto,
       costCenterId: user.costCenter.id,
@@ -38,7 +42,7 @@ export class TransactionsController {
   @ApiCreatedResponse({ type: TransactionEntity, isArray: true })
   createMany(
     @Body(ValidationPipe) transactions: CreateTransactionDto[],
-    @User() user,
+    @User() user: UserEntity,
   ) {
     const transactionsWithCostCenter = transactions.map((transaction) => ({
       ...transaction,
@@ -51,14 +55,17 @@ export class TransactionsController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  async findAll(@User() user) {
+  async findAll(@User() user: UserEntity) {
     return this.transactionsService.findAllByCostCenter(user.costCenter.id);
   }
 
   @Get(':transactionId')
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: TransactionEntity })
-  findOne(@Param('transactionId') transactionId: string, @User() user) {
+  findOne(
+    @Param('transactionId') transactionId: string,
+    @User() user: UserEntity,
+  ) {
     return this.transactionsService.findOne(transactionId, user.costCenter.id);
   }
 
@@ -67,7 +74,7 @@ export class TransactionsController {
   @ApiOkResponse({ type: TransactionEntity })
   update(
     @Param('transactionId') transactionId: string,
-    @User() user,
+    @User() user: UserEntity,
     @Body() updateTransactionDto: UpdateTransactionDto,
   ) {
     return this.transactionsService.update(transactionId, user.costCenter.id, {
@@ -80,7 +87,10 @@ export class TransactionsController {
   @Delete(':transactionId')
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: TransactionEntity })
-  remove(@Param('transactionId') transactionId: string, @User() user) {
+  remove(
+    @Param('transactionId') transactionId: string,
+    @User() user: UserEntity,
+  ) {
     return this.transactionsService.remove(transactionId, user.costCenter.id);
   }
 }
