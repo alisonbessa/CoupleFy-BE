@@ -23,9 +23,15 @@ export class TransactionsService {
     });
   }
 
-  findOne(transactionId: string) {
+  findAllByCostCenter(costCenterId: string) {
+    return this.prisma.transaction.findMany({
+      where: { costCenterId },
+    });
+  }
+
+  findOne(transactionId: string, costCenterId: string) {
     return this.prisma.transaction.findUnique({
-      where: { id: transactionId },
+      where: { id: transactionId, costCenterId },
     });
   }
 
@@ -37,16 +43,20 @@ export class TransactionsService {
   // TODO: Create a service to get transactions by category for a specific month
   // The schema should be updated before, to add a date field or year and month fields
 
-  update(transactionId: string, updateTransactionDto: UpdateTransactionDto) {
+  update(
+    transactionId: string,
+    costCenterId: string,
+    updateTransactionDto: UpdateTransactionDto,
+  ) {
     return this.prisma.transaction.update({
-      where: { id: transactionId },
+      where: { id: transactionId, costCenterId },
       data: updateTransactionDto,
     });
   }
 
-  remove(transactionId: string) {
+  remove(transactionId: string, costCenterId: string) {
     return this.prisma.transaction.delete({
-      where: { id: transactionId },
+      where: { id: transactionId, costCenterId },
     });
   }
 }

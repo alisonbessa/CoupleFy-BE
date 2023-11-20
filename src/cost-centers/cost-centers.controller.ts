@@ -4,14 +4,17 @@ import {
   Post,
   Body,
   Patch,
-  Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { CostCentersService } from './cost-centers.service';
 import { CreateCostCenterDto } from './dto/create-cost-center.dto';
 import { UpdateCostCenterDto } from './dto/update-cost-center.dto';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CostCenterEntity } from './entities/cost-center.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { User } from 'src/users/user.decorator';
+import { UserEntity } from 'src/users/entities/user.entity';
 
 @Controller('cost-centers')
 @ApiTags('CostCenters')
@@ -25,29 +28,29 @@ export class CostCentersController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CostCenterEntity, isArray: true })
-  findAll() {
-    return this.costCentersService.findAll();
+  findOne(@User() user: UserEntity) {
+    return this.costCentersService.findOne(user.costCenter.id);
   }
 
-  @Get(':id')
-  @ApiOkResponse({ type: CostCenterEntity })
-  findOne(@Param('id') id: string) {
-    return this.costCentersService.findOne(id);
-  }
-
-  @Patch(':id')
+  @Patch()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CostCenterEntity })
   update(
-    @Param('id') id: string,
     @Body() updateCostCenterDto: UpdateCostCenterDto,
+    @User() user: UserEntity,
   ) {
-    return this.costCentersService.update(id, updateCostCenterDto);
+    return this.costCentersService.update(
+      user.costCenter.id,
+      updateCostCenterDto,
+    );
   }
 
-  @Delete(':id')
+  @Delete()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CostCenterEntity })
-  remove(@Param('id') id: string) {
-    return this.costCentersService.remove(id);
+  remove(@User() user: UserEntity) {
+    return this.costCentersService.remove(user.costCenter.id);
   }
 }
