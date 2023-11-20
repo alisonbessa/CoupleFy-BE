@@ -45,11 +45,9 @@ export class CreateTransactionDto {
 
   @IsString()
   @IsNotEmpty()
-  @ApiProperty()
   authorId: string;
 
   @IsString()
   @IsNotEmpty()
-  @ApiProperty()
   costCenterId: string;
 }
