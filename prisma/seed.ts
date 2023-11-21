@@ -112,6 +112,7 @@ async function main() {
         paymentMethod: 'Credit Card',
         authorId: users[0].id,
         costCenterId: costCenters[0].id,
+        date: '2023-11',
       },
     }),
     prisma.transaction.create({
@@ -123,6 +124,7 @@ async function main() {
         paymentMethod: 'Debit Card',
         authorId: users[1].id,
         costCenterId: costCenters[0].id,
+        date: '2023-11',
       },
     }),
     prisma.transaction.create({
@@ -134,6 +136,7 @@ async function main() {
         paymentMethod: 'Cash',
         authorId: users[2].id,
         costCenterId: costCenters[1].id,
+        date: '2023-11',
       },
     }),
     prisma.transaction.create({
@@ -145,6 +148,7 @@ async function main() {
         paymentMethod: 'Credit Card',
         authorId: users[3].id,
         costCenterId: costCenters[1].id,
+        date: '2023-11',
       },
     }),
   ]);

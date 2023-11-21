@@ -8,9 +8,13 @@ import {
   Delete,
   ValidationPipe,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { TransactionsService } from './transactions.service';
-import { CreateTransactionDto } from './dto/create-transaction.dto';
+import {
+  CreateTransactionBodyDto,
+  CreateTransactionDto,
+} from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { ApiTags, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { TransactionEntity } from './entities/transaction.entity';
@@ -27,9 +31,10 @@ export class TransactionsController {
   @UseGuards(JwtAuthGuard)
   @ApiCreatedResponse({ type: TransactionEntity })
   create(
-    @Body() createTransactionDto: CreateTransactionDto,
+    @Body() createTransactionDto: CreateTransactionBodyDto,
     @User() user: UserEntity,
   ) {
+    console.log('user', user);
     return this.transactionsService.create({
       ...createTransactionDto,
       costCenterId: user.costCenter.id,
@@ -44,6 +49,7 @@ export class TransactionsController {
     @Body(ValidationPipe) transactions: CreateTransactionDto[],
     @User() user: UserEntity,
   ) {
+    console.log('user', user);
     const transactionsWithCostCenter = transactions.map((transaction) => ({
       ...transaction,
       costCenterId: user.costCenter.id,
@@ -55,8 +61,11 @@ export class TransactionsController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  async findAll(@User() user: UserEntity) {
-    return this.transactionsService.findAllByCostCenter(user.costCenter.id);
+  async findAll(@User() user: UserEntity, @Query('date') date?: string) {
+    return this.transactionsService.findAllByCostCenter(
+      user.costCenter.id,
+      date,
+    );
   }
 
   @Get(':transactionId')
