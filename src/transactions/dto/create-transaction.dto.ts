@@ -4,11 +4,12 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  Matches,
   MaxLength,
   Min,
   MinLength,
 } from 'class-validator';
-export class CreateTransactionDto {
+export class CreateTransactionBodyDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
@@ -43,6 +44,19 @@ export class CreateTransactionDto {
   @ApiProperty()
   paymentMethod: string;
 
+  @IsString()
+  @Matches(/^\d{4}-\d{2}$/, { message: 'Date must be in YYYY-MM format' })
+  @IsNotEmpty()
+  @ApiProperty({
+    example: '2023-12',
+    format: 'YYYY-MM',
+    required: false,
+    nullable: true,
+  })
+  date: string;
+}
+
+export class CreateTransactionDto extends CreateTransactionBodyDto {
   @IsString()
   @IsNotEmpty()
   authorId: string;

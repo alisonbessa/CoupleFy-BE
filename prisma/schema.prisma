@@ -39,7 +39,7 @@ model Transaction {
   paymentMethod String
   authorId      String
   costCenterId  String
-  date          DateTime   @default(now())
+  date          String
   author        User       @relation(fields: [authorId], references: [id])
   costCenter    CostCenter @relation(fields: [costCenterId], references: [id])
 }

@@ -22,6 +22,9 @@ export class TransactionEntity {
   @ApiProperty()
   paymentMethod: string;
 
+  @ApiProperty({ required: false, nullable: true })
+  date?: string;
+
   @ApiProperty()
   authorId: string;
 

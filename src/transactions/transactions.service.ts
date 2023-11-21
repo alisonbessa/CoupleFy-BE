@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { GetTransactionsQuery } from './dto/get-transactions.dto';
 
 @Injectable()
 export class TransactionsService {
@@ -17,15 +18,14 @@ export class TransactionsService {
     });
   }
 
-  findAll(costCenterId: string) {
-    return this.prisma.transaction.findMany({
-      where: { costCenterId },
-    });
-  }
+  findAllByCostCenter(costCenterId: string, date?: string) {
+    let query: GetTransactionsQuery = { costCenterId };
 
-  findAllByCostCenter(costCenterId: string) {
+    if (date) {
+      query = { ...query, date };
+    }
     return this.prisma.transaction.findMany({
-      where: { costCenterId },
+      where: query,
     });
   }
 
