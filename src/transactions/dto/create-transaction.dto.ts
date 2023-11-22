@@ -14,7 +14,7 @@ import {
 export class CreateTransactionBodyDto {
   @IsString()
   @IsNotEmpty()
-  @MinLength(5)
+  @MinLength(3)
   @ApiProperty()
   title: string;
 

@@ -12,10 +12,12 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { User } from 'src/users/user.decorator';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { CategoriesService } from './categories.service';
-import { CreateCategoryDto } from './dto/create-category.dto';
+import { CreateCategoryBodyDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('categories')
+@ApiTags('Categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
@@ -23,7 +25,7 @@ export class CategoriesController {
   @UseGuards(JwtAuthGuard)
   create(
     @User() user: UserEntity,
-    @Body() createCategoryDto: CreateCategoryDto,
+    @Body() createCategoryDto: CreateCategoryBodyDto,
   ) {
     return this.categoriesService.create(user.costCenter.id, createCategoryDto);
   }

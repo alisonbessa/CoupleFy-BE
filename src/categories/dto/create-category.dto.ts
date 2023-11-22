@@ -3,11 +3,12 @@ import {
   IsBoolean,
   IsNotEmpty,
   IsString,
+  IsUUID,
   MaxLength,
   MinLength,
 } from 'class-validator';
 
-export class CreateCategoryDto {
+export class CreateCategoryBodyDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
@@ -18,9 +19,10 @@ export class CreateCategoryDto {
   @IsBoolean()
   @ApiProperty()
   isPrivate: boolean;
+}
 
-  @IsString()
+export class CreateCategoryDto extends CreateCategoryBodyDto {
+  @IsUUID()
   @IsNotEmpty()
-  @ApiProperty({ required: false })
   costCenterId: string;
 }
