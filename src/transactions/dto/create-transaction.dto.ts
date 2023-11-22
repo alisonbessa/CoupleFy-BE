@@ -8,11 +8,13 @@ import {
   MaxLength,
   Min,
   MinLength,
+  IsUUID,
 } from 'class-validator';
+
 export class CreateTransactionBodyDto {
   @IsString()
   @IsNotEmpty()
-  @MinLength(5)
+  @MinLength(3)
   @ApiProperty()
   title: string;
 
@@ -29,15 +31,15 @@ export class CreateTransactionBodyDto {
   @ApiProperty()
   amount: number;
 
-  @IsString()
+  @IsUUID(4)
   @IsNotEmpty()
   @ApiProperty()
-  category: string;
+  categoryId: string;
 
-  @IsString()
+  @IsUUID(4)
   @IsOptional()
   @ApiProperty({ required: false })
-  subcategory?: string;
+  subcategoryId?: string;
 
   @IsString()
   @IsNotEmpty()
@@ -57,11 +59,13 @@ export class CreateTransactionBodyDto {
 }
 
 export class CreateTransactionDto extends CreateTransactionBodyDto {
-  @IsString()
+  @IsUUID(4)
   @IsNotEmpty()
+  @ApiProperty({ required: false })
   authorId: string;
 
-  @IsString()
+  @IsUUID(4)
   @IsNotEmpty()
+  @ApiProperty({ required: false })
   costCenterId: string;
 }

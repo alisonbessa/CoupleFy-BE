@@ -21,8 +21,6 @@ export class UsersService {
     const { costCenterId } = createUserDto;
     let costCenterIdToUse: string;
 
-    console.log('process', process.env.HASHING_ROUNDS);
-
     const hashedPassword = await bcrypt.hash(
       createUserDto.password,
       hashingRounds,
