@@ -101,14 +101,31 @@ async function main() {
     }),
   ]);
 
+  // Create dummy categories for each cost center
+  const categories = await Promise.all([
+    prisma.category.create({
+      data: {
+        name: 'Groceries',
+        isPrivate: false,
+        costCenterId: costCenters[0].id,
+      },
+    }),
+    prisma.category.create({
+      data: {
+        name: 'Entertainment',
+        isPrivate: false,
+        costCenterId: costCenters[0].id,
+      },
+    }),
+  ]);
+
   // Create dummy transactions for the users
   const transactions = await Promise.all([
     prisma.transaction.create({
       data: {
         title: 'Transaction 1',
         amount: 100.0,
-        category: 'Groceries',
-        subcategory: 'Food',
+        categoryId: categories[0].id,
         paymentMethod: 'Credit Card',
         authorId: users[0].id,
         costCenterId: costCenters[0].id,
@@ -119,8 +136,7 @@ async function main() {
       data: {
         title: 'Transaction 2',
         amount: 50.0,
-        category: 'Entertainment',
-        subcategory: 'Movies',
+        categoryId: categories[1].id,
         paymentMethod: 'Debit Card',
         authorId: users[1].id,
         costCenterId: costCenters[0].id,
@@ -131,8 +147,7 @@ async function main() {
       data: {
         title: 'Transaction 3',
         amount: 75.0,
-        category: 'Shopping',
-        subcategory: 'Clothing',
+        categoryId: categories[1].id,
         paymentMethod: 'Cash',
         authorId: users[2].id,
         costCenterId: costCenters[1].id,
@@ -143,8 +158,7 @@ async function main() {
       data: {
         title: 'Transaction 4',
         amount: 120.0,
-        category: 'Dining',
-        subcategory: 'Restaurant',
+        categoryId: categories[0].id,
         paymentMethod: 'Credit Card',
         authorId: users[3].id,
         costCenterId: costCenters[1].id,
@@ -156,6 +170,7 @@ async function main() {
   console.log('Dummy data created successfully:', {
     users,
     costCenters,
+    categories,
     transactions,
   });
 }
