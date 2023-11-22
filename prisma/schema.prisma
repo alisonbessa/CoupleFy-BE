@@ -23,23 +23,45 @@ model CostCenter {
   id           String        @id @default(uuid())
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+  hasPrivacy   Boolean       @default(false)
   transactions Transaction[]
-  User         User[]
+  user         User[]
+  categories   Category[]
 }
 
 model Transaction {
-  id            String     @id @default(uuid())
+  id            String       @id @default(uuid())
   title         String
   description   String?
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
   amount        Float
-  category      String
-  subcategory   String?
   paymentMethod String
   authorId      String
   costCenterId  String
   date          String
-  author        User       @relation(fields: [authorId], references: [id])
-  costCenter    CostCenter @relation(fields: [costCenterId], references: [id])
+  author        User         @relation(fields: [authorId], references: [id])
+  costCenter    CostCenter   @relation(fields: [costCenterId], references: [id])
+  category      Category?    @relation(fields: [categoryId], references: [id])
+  categoryId    String?
+  subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
+  subcategoryId String?
+}
+
+model Category {
+  id            String        @id @default(uuid())
+  name          String
+  isPrivate     Boolean       @default(false)
+  costCenterId  String
+  subcategories Subcategory[]
+  transactions  Transaction[]
+  costCenter    CostCenter    @relation(fields: [costCenterId], references: [id])
+}
+
+model Subcategory {
+  id           String        @id @default(uuid())
+  name         String
+  categoryId   String
+  transactions Transaction[]
+  category     Category      @relation(fields: [categoryId], references: [id])
 }
