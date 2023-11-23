@@ -18,12 +18,21 @@ export class TransactionsService {
     });
   }
 
-  findAllByCostCenter(costCenterId: string, date?: string) {
+  findAllByCostCenter(
+    costCenterId: string,
+    date?: string,
+    categoryId?: string,
+  ) {
     let query: GetTransactionsQuery = { costCenterId };
 
     if (date) {
       query = { ...query, date };
     }
+
+    if (categoryId) {
+      query = { ...query, categoryId };
+    }
+
     return this.prisma.transaction.findMany({
       where: query,
     });
@@ -34,14 +43,6 @@ export class TransactionsService {
       where: { id: transactionId, costCenterId },
     });
   }
-
-  // TODO: Create a service to get transactions from a specific month
-  // The schema should be updated before, to add a date field or year and month fields
-
-  // TODO: Create a service to get transactions by category
-
-  // TODO: Create a service to get transactions by category for a specific month
-  // The schema should be updated before, to add a date field or year and month fields
 
   update(
     transactionId: string,

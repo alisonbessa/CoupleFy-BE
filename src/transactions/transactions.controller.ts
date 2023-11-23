@@ -61,10 +61,15 @@ export class TransactionsController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  async findAll(@User() user: UserEntity, @Query('date') date?: string) {
+  async findAll(
+    @User() user: UserEntity,
+    @Query('date') date?: string,
+    @Query('categoryId') categoryId?: string,
+  ) {
     return this.transactionsService.findAllByCostCenter(
       user.costCenter.id,
       date,
+      categoryId,
     );
   }
 
