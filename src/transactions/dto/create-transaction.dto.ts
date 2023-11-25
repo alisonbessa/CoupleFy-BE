@@ -38,7 +38,7 @@ export class CreateTransactionBodyDto {
 
   @IsUUID(4)
   @IsOptional()
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: false, nullable: true })
   subcategoryId?: string;
 
   @IsString()
