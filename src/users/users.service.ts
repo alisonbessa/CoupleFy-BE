@@ -20,23 +20,23 @@ export class UsersService {
 
     const { costCenterId } = createUserDto;
     let costCenterIdToUse: string;
+    let partnerIdToUse: string;
 
     const hashedPassword = await bcrypt.hash(
       createUserDto.password,
       hashingRounds,
     );
-
     createUserDto.password = hashedPassword;
 
-    if (!costCenterId) {
-      const costCenter = await this.prisma.costCenter.create({
-        data: {},
-      });
+    const isPrimaryUser = !costCenterId;
 
+    if (isPrimaryUser) {
+      const costCenter = await this.prisma.costCenter.create({ data: {} });
       costCenterIdToUse = costCenter.id;
     } else {
       const existingCostCenter = await this.prisma.costCenter.findUnique({
         where: { id: costCenterId },
+        include: { user: true },
       });
 
       if (!existingCostCenter) {
@@ -44,11 +44,24 @@ export class UsersService {
       }
 
       costCenterIdToUse = costCenterId;
+      partnerIdToUse = existingCostCenter.user[0].id;
     }
 
-    return this.prisma.user.create({
-      data: { ...createUserDto, costCenterId: costCenterIdToUse },
+    const newUser = await this.prisma.user.create({
+      data: {
+        ...createUserDto,
+        costCenterId: costCenterIdToUse,
+        isPrimaryUser,
+        partnerId: partnerIdToUse || null,
+      },
     });
+
+    await this.prisma.user.update({
+      where: { id: partnerIdToUse },
+      data: { partnerId: newUser.id },
+    });
+
+    return newUser;
   }
 
   findAll() {
@@ -78,7 +91,11 @@ export class UsersService {
 
     return this.prisma.user.update({
       where: { id },
-      data: updateUserDto,
+      data: {
+        ...updateUserDto,
+        costCenterId: undefined,
+        isPrimaryUser: undefined,
+      },
     });
   }
 

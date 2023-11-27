@@ -19,6 +19,12 @@ export class UserEntity {
   costCenterId?: string;
 
   @ApiProperty()
+  isPrimaryUser: boolean;
+
+  @ApiProperty()
+  partnerId: string;
+
+  @ApiProperty()
   createdAt: Date;
 
   @ApiProperty()

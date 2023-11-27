@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsBoolean,
   IsEmail,
   IsNotEmpty,
   IsOptional,
@@ -28,4 +29,9 @@ export class CreateUserDto {
   @IsOptional()
   @ApiProperty({ required: false })
   costCenterId?: string;
+
+  @IsBoolean()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  isPrimaryUser?: string;
 }

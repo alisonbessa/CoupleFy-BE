@@ -2,9 +2,12 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,
   IsNotEmpty,
+  IsNumber,
   IsString,
   IsUUID,
+  Max,
   MaxLength,
+  Min,
   MinLength,
 } from 'class-validator';
 
@@ -19,6 +22,18 @@ export class CreateCategoryBodyDto {
   @IsBoolean()
   @ApiProperty()
   isPrivate: boolean;
+
+  @IsNumber()
+  @Min(0)
+  @Max(100)
+  @ApiProperty({ default: 50 })
+  primaryUserWeight: number;
+
+  @IsNumber()
+  @Min(0)
+  @Max(100)
+  @ApiProperty({ default: 50 })
+  secondaryUserWeight: number;
 }
 
 export class CreateCategoryDto extends CreateCategoryBodyDto {

@@ -1,15 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CategoryEntity {
-  @ApiProperty({ example: 'uuid-da-categoria' })
+  @ApiProperty()
   id: string;
 
-  @ApiProperty({ example: 'Alimentação' })
+  @ApiProperty()
   name: string;
 
   @ApiProperty({ example: true })
   isPrivate: boolean;
 
-  @ApiProperty({ example: 'uuid-do-centro-de-custos' })
+  @ApiProperty()
+  primaryUserWeight: number;
+
+  @ApiProperty()
+  secondaryUserWeight: number;
+
+  @ApiProperty()
   costCenterId: string;
 }
