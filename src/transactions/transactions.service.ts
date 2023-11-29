@@ -71,6 +71,9 @@ export class TransactionsService {
 
     return this.prisma.transaction.findMany({
       where: query,
+      include: {
+        UserTransaction: true,
+      },
     });
   }
 
