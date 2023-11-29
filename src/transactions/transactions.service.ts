@@ -8,8 +8,44 @@ import { GetTransactionsQuery } from './dto/get-transactions.dto';
 export class TransactionsService {
   constructor(private prisma: PrismaService) {}
 
-  create(createTransactionDto: CreateTransactionDto) {
-    return this.prisma.transaction.create({ data: createTransactionDto });
+  async create(createTransactionDto: CreateTransactionDto) {
+    const transaction = await this.prisma.transaction.create({
+      data: createTransactionDto,
+    });
+
+    const author = await this.prisma.user.findUnique({
+      where: { id: createTransactionDto.authorId },
+    });
+    const partnerId = author.partnerId;
+
+    let primaryUserWeight = createTransactionDto.primaryUserWeight;
+    let secondaryUserWeight = createTransactionDto.secondaryUserWeight;
+
+    if (primaryUserWeight === undefined || secondaryUserWeight === undefined) {
+      const category = await this.prisma.category.findUnique({
+        where: { id: createTransactionDto.categoryId },
+      });
+
+      primaryUserWeight = primaryUserWeight ?? category.primaryUserWeight;
+      secondaryUserWeight = secondaryUserWeight ?? category.secondaryUserWeight;
+    }
+
+    await this.prisma.userTransaction.createMany({
+      data: [
+        {
+          userId: author.id,
+          transactionId: transaction.id,
+          userWeight: primaryUserWeight,
+        },
+        {
+          userId: partnerId,
+          transactionId: transaction.id,
+          userWeight: secondaryUserWeight,
+        },
+      ],
+    });
+
+    return transaction;
   }
 
   createMany(transactions: CreateTransactionDto[]) {
@@ -35,6 +71,9 @@ export class TransactionsService {
 
     return this.prisma.transaction.findMany({
       where: query,
+      include: {
+        UserTransaction: true,
+      },
     });
   }
 

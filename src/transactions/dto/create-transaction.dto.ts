@@ -9,6 +9,7 @@ import {
   Min,
   MinLength,
   IsUUID,
+  Max,
 } from 'class-validator';
 
 export class CreateTransactionBodyDto {
@@ -45,6 +46,20 @@ export class CreateTransactionBodyDto {
   @IsNotEmpty()
   @ApiProperty()
   paymentMethod: string;
+
+  @IsNumber()
+  @Min(0)
+  @Max(100)
+  @IsOptional()
+  @ApiProperty({ required: false })
+  primaryUserWeight?: number;
+
+  @IsNumber()
+  @Min(0)
+  @Max(100)
+  @IsOptional()
+  @ApiProperty({ required: false })
+  secondaryUserWeight?: number;
 
   @IsString()
   @Matches(/^\d{4}-\d{2}$/, { message: 'Date must be in YYYY-MM format' })

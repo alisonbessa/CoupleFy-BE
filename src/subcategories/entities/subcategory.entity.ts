@@ -9,4 +9,10 @@ export class SubcategoryEntity {
 
   @ApiProperty()
   categoryId: string;
+
+  @ApiProperty()
+  primaryUserWeight: number;
+
+  @ApiProperty()
+  secondaryUserWeight: number;
 }

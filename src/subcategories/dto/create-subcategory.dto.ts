@@ -5,6 +5,9 @@ import {
   MaxLength,
   MinLength,
   IsUUID,
+  IsNumber,
+  Max,
+  Min,
 } from 'class-validator';
 
 export class CreateSubcategoryDto {
@@ -12,11 +15,23 @@ export class CreateSubcategoryDto {
   @IsNotEmpty()
   @MinLength(3)
   @MaxLength(50)
-  @ApiProperty({ example: 'Viagem' })
+  @ApiProperty()
   name: string;
 
   @IsUUID(4)
   @IsNotEmpty()
-  @ApiProperty({ example: 'uuid-da-categoria' })
+  @ApiProperty()
   categoryId: string;
+
+  @IsNumber()
+  @Min(0)
+  @Max(100)
+  @ApiProperty({ default: 50 })
+  primaryUserWeight: number;
+
+  @IsNumber()
+  @Min(0)
+  @Max(100)
+  @ApiProperty({ default: 50 })
+  secondaryUserWeight: number;
 }

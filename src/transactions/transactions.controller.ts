@@ -34,11 +34,10 @@ export class TransactionsController {
     @Body() createTransactionDto: CreateTransactionBodyDto,
     @User() user: UserEntity,
   ) {
-    console.log('user', user);
     return this.transactionsService.create({
       ...createTransactionDto,
-      costCenterId: user.costCenter.id,
       authorId: user.id,
+      costCenterId: user.costCenterId,
     });
   }
 
@@ -49,7 +48,6 @@ export class TransactionsController {
     @Body(ValidationPipe) transactions: CreateTransactionDto[],
     @User() user: UserEntity,
   ) {
-    console.log('user', user);
     const transactionsWithCostCenter = transactions.map((transaction) => ({
       ...transaction,
       costCenterId: user.costCenter.id,
@@ -63,8 +61,8 @@ export class TransactionsController {
   @UseGuards(JwtAuthGuard)
   async findAll(
     @User() user: UserEntity,
+    @Query('categoryId') categoryId: string,
     @Query('date') date?: string,
-    @Query('categoryId') categoryId?: string,
   ) {
     return this.transactionsService.findAllByCostCenter(
       user.costCenter.id,
