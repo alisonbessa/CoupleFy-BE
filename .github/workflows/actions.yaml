@@ -18,7 +18,7 @@ jobs:
       - name: Login to Fly.io
         uses: superfly/flyctl-actions/setup-flyctl@master
         with:
-          flyctl_api_token: ${{ secrets.FLY_API_TOKEN }}
+          flyctl auth login: ${{ secrets.FLY_API_TOKEN }}
 
       - name: Deploy to Fly.io
         run: flyctl deploy
