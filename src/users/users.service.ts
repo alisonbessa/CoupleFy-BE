@@ -56,10 +56,12 @@ export class UsersService {
       },
     });
 
-    await this.prisma.user.update({
-      where: { id: partnerIdToUse },
-      data: { partnerId: newUser.id },
-    });
+    if (!isPrimaryUser) {
+      await this.prisma.user.update({
+        where: { id: partnerIdToUse },
+        data: { partnerId: newUser.id },
+      });
+    }
 
     return newUser;
   }
