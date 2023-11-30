@@ -30,20 +30,30 @@ export class TransactionsService {
       secondaryUserWeight = secondaryUserWeight ?? category.secondaryUserWeight;
     }
 
-    await this.prisma.userTransaction.createMany({
-      data: [
-        {
+    if (partnerId) {
+      await this.prisma.userTransaction.createMany({
+        data: [
+          {
+            userId: author.id,
+            transactionId: transaction.id,
+            userWeight: primaryUserWeight,
+          },
+          {
+            userId: partnerId,
+            transactionId: transaction.id,
+            userWeight: secondaryUserWeight,
+          },
+        ],
+      });
+    } else {
+      await this.prisma.userTransaction.create({
+        data: {
           userId: author.id,
           transactionId: transaction.id,
-          userWeight: primaryUserWeight,
+          userWeight: 100,
         },
-        {
-          userId: partnerId,
-          transactionId: transaction.id,
-          userWeight: secondaryUserWeight,
-        },
-      ],
-    });
+      });
+    }
 
     return transaction;
   }
